@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Future<dynamic> showBasicDialog(BuildContext context) {
+Future<bool?> showBasicDialog(BuildContext context) {
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -10,14 +10,15 @@ Future<dynamic> showBasicDialog(BuildContext context) {
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(); // Cierra el diálogo
+              // Cierra el diálogo devolviendo null
+              Navigator.of(context).pop();
             },
             child: const Text("No"),
           ),
           FilledButton(
             onPressed: () {
-              // Aquí puedes ejecutar la acción de eliminar
-              Navigator.of(context).pop(); // Cierra el diálogo
+              // Cierra el diálogo devolviendo true
+              Navigator.of(context).pop(true);
             },
             child: const Text("Sí"),
           ),

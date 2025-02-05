@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dialog/dialogs/showBasicDialog.dart';
-import 'package:flutter_dialog/dialogs/showInputDialog.dart';
+import 'package:flutter_dialog/dialogs/show_basic_dialog.dart';
+import 'package:flutter_dialog/dialogs/show_input_dialog.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,13 +45,22 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             FloatingActionButton.extended(
               label: const Text("Show Dialog Basic"),
-              onPressed: () {
-                showBasicDialog(context);
+              onPressed: () async {
+                final result = await showBasicDialog(context);
+                debugPrint("resultado showBasicDialog: $result");
               },
             ),
             FloatingActionButton.extended(
-              onPressed: () {
-                showInputDialog(context);
+              onPressed: () async {
+                final result = await showInputDialog(context);
+                debugPrint("resultado showInputDialog: $result");
+
+                if (result != null) {
+                  String name = result["name"]!;
+                  String email = result["email"]!;
+                  debugPrint("resultado name: $name");
+                  debugPrint("resultado email: $email");
+                }
               },
               label: const Text("Show Dialog Input"),
             ),

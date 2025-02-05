@@ -1,7 +1,6 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
 
-void showInputDialog(BuildContext context) {
+Future<Map<String, String>?> showInputDialog(BuildContext context) {
   // Crear controladores de texto para los dos campos
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
@@ -12,7 +11,7 @@ void showInputDialog(BuildContext context) {
   // Usar una clave global para el formulario y validarlo
   final _formKey = GlobalKey<FormState>();
 
-  showDialog(
+  return showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
@@ -84,7 +83,8 @@ void showInputDialog(BuildContext context) {
           // Botón de Cancelar
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(); // Cerrar el diálogo
+              // Cerrar el diálogo
+              Navigator.of(context).pop();
             },
             child: const Text("Cancelar"),
           ),
@@ -95,9 +95,12 @@ void showInputDialog(BuildContext context) {
               if (_formKey.currentState?.validate() ?? false) {
                 String name = _nameController.text;
                 String email = _emailController.text;
-                Navigator.of(context).pop();
-                // Aquí puedes hacer algo con el nombre y email ingresados
-                showSnackbar(context, 'Hola, $name! Tu correo es $email');
+
+                // Crear el Map y guardarlo en una variable
+                Map<String, String> resultMap = {'name': name, 'email': email};
+
+                // Pasamos los valores al cerrar el diálogo
+                Navigator.of(context).pop(resultMap);
               }
             },
             child: const Text("Aceptar"),
@@ -105,15 +108,5 @@ void showInputDialog(BuildContext context) {
         ],
       );
     },
-  );
-}
-
-// Mostrar un snackbar con el mensaje
-void showSnackbar(BuildContext context, String message) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(message),
-      duration: const Duration(seconds: 2),
-    ),
   );
 }
